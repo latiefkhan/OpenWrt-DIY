@@ -148,7 +148,7 @@ jobs:
         sudo rm -rf openwrt && sync
         sudo rm -rf /workdir && sync
         sudo chmod +x make
-        sudo ./make -d -b s9xxx_n1_x96_hk1_h96_octopus_belink_belinkpro_ugoos -k 5.9.16_5.4.86
+        sudo ./make -d -b hk1 -k 5.9.16_5.4.86
         cd out/ && sudo gzip *.img
         cp -f ../openwrt-armvirt/*.tar.gz . && sync
         echo "FILEPATH=$PWD" >> $GITHUB_ENV
@@ -162,84 +162,12 @@ jobs:
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
 
-    - name: Upload firmware directory for Phicomm-N1
-      uses: actions/upload-artifact@v2
-      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      with:
-        name: openwrt_phicomm-n1_${{ env.FILE_DATE }}
-        path: ${{ env.FILEPATH }}/openwrt_n1_*
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
-
-    - name: Upload firmware directory for S9xxx-Boxs
-      uses: actions/upload-artifact@v2
-      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      with:
-        name: openwrt_s9xxx_${{ env.FILE_DATE }}
-        path: ${{ env.FILEPATH }}/openwrt_s9xxx_*
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
-
-    - name: Upload firmware directory for Belink GT-King
-      uses: actions/upload-artifact@v2
-      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      with:
-        name: openwrt_belink_${{ env.FILE_DATE }}
-        path: ${{ env.FILEPATH }}/openwrt_belink_*
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
-
-    - name: Upload firmware directory for Belink GT-King Pro
-      uses: actions/upload-artifact@v2
-      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      with:
-        name: openwrt_belinkpro_${{ env.FILE_DATE }}
-        path: ${{ env.FILEPATH }}/openwrt_belinkpro_*
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
-
-    - name: Upload firmware directory for UGOOS AM6 Plus
-      uses: actions/upload-artifact@v2
-      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      with:
-        name: openwrt_ugoos_${{ env.FILE_DATE }}
-        path: ${{ env.FILEPATH }}/openwrt_ugoos_*
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
-
-    - name: Upload firmware directory for X96-Max+
-      uses: actions/upload-artifact@v2
-      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      with:
-        name: openwrt_x96-max_${{ env.FILE_DATE }}
-        path: ${{ env.FILEPATH }}/openwrt_x96_*
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
-
     - name: Upload firmware directory for HK1-Box
       uses: actions/upload-artifact@v2
       if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       with:
         name: openwrt_hk1-box_${{ env.FILE_DATE }}
         path: ${{ env.FILEPATH }}/openwrt_hk1_*
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
-
-    - name: Upload firmware directory for H96-Max-X3
-      uses: actions/upload-artifact@v2
-      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      with:
-        name: openwrt_h96-max-x3_${{ env.FILE_DATE }}
-        path: ${{ env.FILEPATH }}/openwrt_h96_*
-        retention-days: ${{ env.RECENT_LASTEST }}
-        if-no-files-found: ignore
-
-    - name: Upload firmware directory for Octopus-Planet
-      uses: actions/upload-artifact@v2
-      if: steps.build.outputs.status == 'success' && env.UPLOAD_FIRMWARE == 'true' && !cancelled()
-      with:
-        name: openwrt_octopus-planet_${{ env.FILE_DATE }}
-        path: ${{ env.FILEPATH }}/openwrt_octopus_*
         retention-days: ${{ env.RECENT_LASTEST }}
         if-no-files-found: ignore
 
