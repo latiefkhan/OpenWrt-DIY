@@ -271,15 +271,25 @@ jobs:
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
         echo "::set-output name=status::success"
 
-    - name: Upload firmware to release
+    - name: Upload OpenWrt Firmware to Release
       uses: softprops/action-gh-release@v1
-      if: steps.tag.outputs.status == 'success' && !cancelled()
+      if: steps.build.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.tag.outputs.release_tag }}
-        body_path: release.txt
-        files: ${{ env.FIRMWARE }}/*
+        tag_name: openwrt_s9xxx_${{ env.FILE_DATE }}
+        files: ${{ env.FILEPATH }}/*
+        body: |
+          This is OpenWrt firmware for S9xxx-Boxs
+          * Firmware information
+          Default IP: 192.168.1.1
+          Default username: root
+          Default password: password
+          Default WIFI name: OpenWrt
+          Default WIFI password: none
+          S9xxx-Boxs installation command: s9xxx-install.sh
+          Phicomm-N1 installation command: n1-install.sh
+          [WETRANSFER](${{ env.WET_URL }})
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
